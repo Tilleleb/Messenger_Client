@@ -12,6 +12,11 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Message implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue
 	@Column(name = "MESSAGE_ID")
@@ -26,6 +31,10 @@ public class Message implements Serializable {
     @ManyToOne
     @JoinColumn(name="USER_ID")
     private User sender;
+    
+	@ManyToOne
+    @JoinColumn(name="CHAT_ID")
+    private Chat chat;	
     
     public Long getMessageId() {
 		return messageId;
@@ -59,15 +68,13 @@ public class Message implements Serializable {
 		this.sender = sender;
 	}
 
-	public ChatConversation getChat() {
+	public Chat getChat() {
 		return chat;
 	}
 
-	public void setChat(ChatConversation chat) {
+	public void setChat(Chat chat) {
 		this.chat = chat;
 	}
 
-	@ManyToOne
-    @JoinColumn(name="CHAT_ID")
-    private ChatConversation chat;	
+
 }

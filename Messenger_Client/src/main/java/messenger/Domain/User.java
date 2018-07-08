@@ -2,7 +2,9 @@ package messenger.Domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,13 +13,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+
 import javax.persistence.JoinColumn;
 
-
-@Entity
+@Entity(name = "User")
 public class User implements Serializable {
 
-    @GeneratedValue
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@GeneratedValue
     @Id
     @Column(name = "USER_ID")
     private Long userId;
@@ -27,40 +34,52 @@ public class User implements Serializable {
     
     @Column(name = "PASSWORD")
     private String password;
-
+    
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "CONTACTS",
     	joinColumns = @JoinColumn(name = "USER_ID"),
     	inverseJoinColumns = @JoinColumn(name = "CONTACT_ID")
     )
-    private List<User> contacts = new ArrayList<User>();
+    private Set<User> contacts = new HashSet<User>();
     
-    public List<User> getContacts() {
+	@ManyToMany(mappedBy = "contacts", fetch = FetchType.EAGER)
+    private Set<User> contactOf = new HashSet<User>();
+    
+	@ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
+	private List<Chat> chats = new ArrayList<Chat>();
+	
+    public Set<User> getContacts() {
 		return contacts;
 	}
+	
+	public void setContacts(Set<User> contacts) {
+	this.contacts = contacts;
+}
 
 
-	public void setContacts(List<User> contacts) {
-		this.contacts = contacts;
+	public List<Chat> getChats() {
+		return chats;
 	}
 
 
-	public List<User> getContactOf() {
+	public void setChats(List<Chat> chats) {
+		this.chats = chats;
+	}
+
+
+
+
+public Set<User> getContactOf() {
 		return contactOf;
 	}
 
 
-	public void setContactOf(List<User> contactOf) {
+	public void setContactOf(Set<User> contactOf) {
 		this.contactOf = contactOf;
 	}
 
 
-	@ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "CONTACTS",
-    	joinColumns = @JoinColumn(name = "CONTACT_ID"),
-    	inverseJoinColumns = @JoinColumn(name = "USER_ID")
-    )
-    private List<User> contactOf = new ArrayList<User>();
+
 	
 	public Long getUserId() {
 		return userId;
