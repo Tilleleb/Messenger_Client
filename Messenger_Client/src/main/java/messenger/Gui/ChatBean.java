@@ -8,19 +8,18 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
-import messenger.ChatService.Communication;
-import messenger.ChatService.ManageChatGroups;
+import messenger.ServiceAdapter.CommunicationAdapter;
+import messenger.ServiceAdapter.ManageChatGroupsAdapter;
 
 
-@ManagedBean
-@SessionScoped
+@Component
+@Scope("session")
 public class ChatBean implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
@@ -32,10 +31,10 @@ public class ChatBean implements Serializable{
 //    private ChatListBean chatBeanList;
 
 	@Autowired
-	private ManageChatGroups manageChatGroups;
+	private ManageChatGroupsAdapter manageChatGroups;
 	
 	@Autowired
-    private Communication communication;
+    private CommunicationAdapter communication;
     
     private String[][] arrayMessages;
     
@@ -52,11 +51,11 @@ public class ChatBean implements Serializable{
     	//chatList = manageChatGroups.getAllConversations(userBean.getUserId());
     }
     
-    public ManageChatGroups getManageChatGroups() {
+    public ManageChatGroupsAdapter getManageChatGroups() {
 		return manageChatGroups;
 	}
 
-	public void setManageChatGroups(ManageChatGroups manageChatGroups) {
+	public void setManageChatGroups(ManageChatGroupsAdapter manageChatGroups) {
 		this.manageChatGroups = manageChatGroups;
 	}
 
@@ -86,12 +85,12 @@ public class ChatBean implements Serializable{
 	}
 
 
-	public Communication getCommunication() {
+	public CommunicationAdapter getCommunication() {
 		return communication;
 	}
 
 
-	public void setCommunication(Communication communication) {
+	public void setCommunication(CommunicationAdapter communication) {
 		this.communication = communication;
 	}
 
@@ -135,7 +134,8 @@ public class ChatBean implements Serializable{
 	}
 	
 	public List<Long> getAllConversations(Long userId) {
-		return manageChatGroups.getAllConversations(userId);
+		//return manageChatGroups.getAllConversations(userId);
+		return null;
 	}
 
     public String showChat() {

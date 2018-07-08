@@ -3,16 +3,16 @@ package messenger.Gui;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
-import messenger.ChatService.UserManagement;
+import messenger.ServiceAdapter.UserManagementAdapter;
 
 @Component
-@Scope("singleton")
+@Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class AddUserBean implements Serializable{
 	private static final long serialVersionUID = 1L;
 
@@ -24,7 +24,7 @@ public class AddUserBean implements Serializable{
 	private UserBean userBean;
 
 	@Autowired
-	private UserManagement userManagement;
+	private UserManagementAdapter userManagement;
 	
 
 	public String getUsername() {
@@ -63,13 +63,13 @@ public class AddUserBean implements Serializable{
 
 
 
-	public UserManagement getUserManagement() {
+	public UserManagementAdapter getUserManagement() {
 		return userManagement;
 	}
 
 
 
-	public void setUserManagement(UserManagement userManagement) {
+	public void setUserManagement(UserManagementAdapter userManagement) {
 		this.userManagement = userManagement;
 	}
 	

@@ -2,32 +2,37 @@ package messenger.Gui;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+
+import messenger.Domain.User;
+import messenger.ServiceAdapter.GetUserAdapter;
+import messenger.ServiceAdapter.UserManagementAdapter;
+
 import org.springframework.context.annotation.ScopedProxyMode;
 
-import messenger.ChatService.GetUser;
-import messenger.ChatService.UserManagement;
-import messenger.ChatServiceImpl.UserManagementImpl;
-
 @Component
-@Scope(value="session", proxyMode = ScopedProxyMode.TARGET_CLASS)
+@Scope("session")
 public class UserBean implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Autowired
-    private UserManagement userManagement;
+    private UserManagementAdapter userManagement;
     
 	@Autowired
-    private GetUser getUser;
+    private GetUserAdapter getUser;
     
-    private List<String> userList = new ArrayList<String>();
+    private List<User> userList = new ArrayList<User>();
     
     private String username;
     
@@ -37,23 +42,23 @@ public class UserBean implements Serializable{
     
     @PostConstruct
     public void init() {
-    	userList = userManagement.getAllUsers();
+    	userList = Arrays.asList(userManagement.getAllUsers());
     }
 
-	public UserManagement getUserManagement() {
+	public UserManagementAdapter getUserManagement() {
 		return userManagement;
 	}
 
-	public void setUserManagement(UserManagementImpl userManagement) {
+	public void setUserManagement(UserManagementAdapter userManagement) {
 		this.userManagement = userManagement;
 	}
 
 	
-	public List<String> getUserList() {
+	public List<User> getUserList() {
 		return userList;
 	}
 
-	public void setUserList(List<String> userList) {
+	public void setUserList(List<User> userList) {
 		this.userList = userList;
 	}
 
@@ -82,14 +87,14 @@ public class UserBean implements Serializable{
 	}
     
     public String save(){
-    	userId = getUser.getUser(username);
-    	isUserSet = true;
+    	//userId = getUser.getUser(username);
+    	//isUserSet = true;
     	return "success";
     }
     
     public String deleteUser(){
-    	userId = getUser.getUser(username);
-    	userManagement.deleteUser(userId);
+    	//userId = getUserId().getUser(username);
+    	//userManagement.deleteUser(userId);
     	this.init();
     	this.logout();
     	isUserSet = false;

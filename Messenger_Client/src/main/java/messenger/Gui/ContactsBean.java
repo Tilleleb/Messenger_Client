@@ -5,15 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import messenger.ChatService.GetUser;
-import messenger.ChatService.ManageContactList;
-import messenger.ChatService.UserManagement;
+import messenger.ServiceAdapter.GetUserAdapter;
+import messenger.ServiceAdapter.ManageContactListAdapter;
 
 @Component
 @Scope("prototype")
@@ -24,10 +22,10 @@ public class ContactsBean implements Serializable{
 	private UserBean userBean;
 
 	@Autowired
-	private GetUser getUser;
+	private GetUserAdapter getUser;
 	
 	@Autowired
-	private ManageContactList manageContactList;
+	private ManageContactListAdapter manageContactList;
 	
 	private List<Long> contactsIdList = new ArrayList<Long>();
 	
@@ -37,7 +35,7 @@ public class ContactsBean implements Serializable{
 	
 	@PostConstruct
 	private void init(){
-		contactsIdList = manageContactList.getContactList(userBean.getUserId());
+		//contactsIdList = manageContactList.getContactList(userBean.getUserId());
 		//contactsList.add(new GuiContact(30L, "DummyContact"));
 	}
 
@@ -49,19 +47,19 @@ public class ContactsBean implements Serializable{
 		this.userBean = userBean;
 	}
 
-	public GetUser getGetUser() {
+	public GetUserAdapter getGetUser() {
 		return getUser;
 	}
 
-	public void setGetUser(GetUser getUser) {
+	public void setGetUser(GetUserAdapter getUser) {
 		this.getUser = getUser;
 	}
 
-	public ManageContactList getManageContactList() {
+	public ManageContactListAdapter getManageContactList() {
 		return manageContactList;
 	}
 
-	public void setManageContactList(ManageContactList manageContactList) {
+	public void setManageContactList(ManageContactListAdapter manageContactList) {
 		this.manageContactList = manageContactList;
 	}
 
@@ -90,7 +88,7 @@ public class ContactsBean implements Serializable{
 	}
 
 	public String addContact() {
-		manageContactList.addContact(userBean.getUserId(),getUser.getUser(this.contactName));
+		//manageContactList.addContact(userBean.getUser(),getUser.getUser(this.contactName));
 		contactName = "";
 		this.init();
 		return "success";
