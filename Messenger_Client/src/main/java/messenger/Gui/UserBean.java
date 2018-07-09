@@ -32,83 +32,71 @@ public class UserBean implements Serializable{
 	@Autowired
     private GetUserAdapter getUser;
     
-    private List<User> userList = new ArrayList<User>();
+    private List<User> userList;
     
-    private String username;
-    
-    private Long userId;
-    
-    private boolean isUserSet =false;
-    
-    @PostConstruct
+	private User user = new User();
+
+	@PostConstruct
     public void init() {
     	userList = Arrays.asList(userManagement.getAllUsers());
     }
 
-	public UserManagementAdapter getUserManagement() {
-		return userManagement;
-	}
-
-	public void setUserManagement(UserManagementAdapter userManagement) {
-		this.userManagement = userManagement;
-	}
-
-	
-	public List<User> getUserList() {
-		return userList;
-	}
-
-	public void setUserList(List<User> userList) {
-		this.userList = userList;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public Long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
-
-	public boolean getIsUserSet() {
-		return isUserSet;
-	}
-
-	public void setIsUserSet(boolean isUserSet) {
-		this.isUserSet = isUserSet;
-	}
     
     public String save(){
-    	//userId = getUser.getUser(username);
-    	//isUserSet = true;
+    	//user = userManagement.getUser(user);
     	return "success";
     }
     
     public String deleteUser(){
-    	//userId = getUserId().getUser(username);
-    	//userManagement.deleteUser(userId);
-    	this.init();
+    	userManagement.deleteUser(user);
     	this.logout();
-    	isUserSet = false;
-    	username = "";
-    	userId = null;
+    	this.init();
     	return "successDelete";
     }
     
     public String logout(){
-    	isUserSet = false;
-    	username = "";
-    	userId = null;
+    	user = null;
     	return "chooseUser?faces-redirect=true";
     }
-    
+
+    public UserManagementAdapter getUserManagement() {
+  		return userManagement;
+  	}
+
+
+  	public void setUserManagement(UserManagementAdapter userManagement) {
+  		this.userManagement = userManagement;
+  	}
+
+
+  	public GetUserAdapter getGetUser() {
+  		return getUser;
+  	}
+
+
+  	public void setGetUser(GetUserAdapter getUser) {
+  		this.getUser = getUser;
+  	}
+
+
+  	public List<User> getUserList() {
+  		return userList;
+  	}
+
+
+  	public void setUserList(List<User> userList) {
+  		this.userList = userList;
+  	}
+
+
+  	public User getUser() {
+  		return user;
+  	}
+
+
+  	public void setUser(User user) {
+  		this.user = user;
+  	}
+
     
 }

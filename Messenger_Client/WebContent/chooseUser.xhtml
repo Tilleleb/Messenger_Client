@@ -22,12 +22,12 @@
 
 				<h:panelGrid columns="2" cellpadding="5">
 					<p:outputLabel for="user" value="User: " />
-					<p:selectOneMenu id="user" value="#{userBean.username}"
-						style="width:150px" required="true">
+					<p:selectOneMenu id="user" value="#{userBean.user}"
+						style="width:150px" converter="userConverter" required="true">
 						<f:selectItem itemLabel="Select User" itemValue=""
 							noSelectionOption="true" />
 						<f:selectItems value="#{userBean.userList}" var="user"
-							itemLabel="#{user}" itemValue="#{user}" />
+							itemLabel="#{user.username}" itemValue="#{user}" />
 					</p:selectOneMenu>
 				</h:panelGrid>
 

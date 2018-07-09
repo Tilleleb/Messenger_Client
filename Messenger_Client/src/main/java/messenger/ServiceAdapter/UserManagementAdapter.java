@@ -1,6 +1,6 @@
 package messenger.ServiceAdapter;
 
-import java.util.List;
+import java.io.Serializable;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,8 +10,14 @@ import org.springframework.web.client.RestTemplate;
 import messenger.Domain.User;
 
 @Service
-public class UserManagementAdapter {
+public class UserManagementAdapter implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+
 	public int addUser(String username, String passwort) {
 		final String uri = "http://localhost:8081/messenger/userManagement/addUser.json";
 	     
@@ -37,11 +43,19 @@ public class UserManagementAdapter {
 	    return result;
 	}
 	
-	public boolean getUser(User user) {
+	public User getUser(User user) {
 		final String uri = "http://localhost:8081/messenger/userManagement/getUser";
 		
 	    RestTemplate restTemplate = new RestTemplate();
-	    boolean result = restTemplate.postForObject(uri, user, boolean.class);
+	    User result = restTemplate.postForObject(uri, user, User.class);
+	    return result;
+	}
+	
+	public User getUserById(Long userId) {
+		final String uri = "http://localhost:8081/messenger/userManagement/getUserById";
+		
+	    RestTemplate restTemplate = new RestTemplate();
+	    User result = restTemplate.postForObject(uri, userId, User.class);
 	    return result;
 	}
 	

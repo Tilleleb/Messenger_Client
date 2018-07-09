@@ -13,9 +13,9 @@
 		<h:panelGrid id="panel" columns="1">
 			<p:commandLink value="Kontakte"
 				action="contactList.xhtml?faces-redirect=true"
-				rendered="#{userBean.isUserSet}" />
+				rendered="#{userBean.user.username ne null}" />
 			<p:separator />
-			<p:commandLink value="Logout #{userBean.username}" action="#{userBean.logout}" update="panel" />		
+			<p:commandLink value="Logout #{userBean.user.username}" action="#{userBean.logout}" update="panel" />		
 
 		</h:panelGrid>
 	</h:form>
