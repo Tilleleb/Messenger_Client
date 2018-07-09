@@ -17,27 +17,24 @@
 		
 		
 			<p:messages id="errorMessages" style="color:red;margin:8px;" />
-			<p:panel header="Waehlen Sie einen Nutzer"
-				style="margin-bottom:10px;">
 
-				<h:panelGrid columns="2" cellpadding="5">
-					<p:outputLabel for="user" value="User: " />
-					<p:selectOneMenu id="user" value="#{userBean.user}"
-						style="width:150px" converter="userConverter" required="true">
-						<f:selectItem itemLabel="Select User" itemValue=""
-							noSelectionOption="true" />
-						<f:selectItems value="#{userBean.userList}" var="user"
-							itemLabel="#{user.username}" itemValue="#{user}" />
-					</p:selectOneMenu>
-				</h:panelGrid>
 
-				<p:separator />
-
-				<p:commandButton value="Einloggen" action="#{userBean.save}"
-					update="errorMessages" icon="ui-icon-check" />
-				<p:commandButton value="Entfernen" action="#{userBean.deleteUser}"
-					update="errorMessages" icon="ui-icon-arrowthick-1-w" />
-			</p:panel>
+			<p:dataTable var="user" value="#{userBean.userList}">
+			    <p:column headerText="Name">
+			        <h:outputText value="#{user.username}" />
+			    </p:column>
+			    <p:column headerText="Password">
+			        <h:outputText value="#{user.password}" />
+			    </p:column>
+			    <p:column>
+				<f:facet name="header">User anmelden</f:facet>
+				<p:commandButton action="#{userBean.save(user)}" id="oeffnen" icon="ui-icon-comment" title="User anmelden" />
+				</p:column>
+				<p:column>
+				<f:facet name="header">User löschen</f:facet>
+				<p:commandButton action="#{userBean.delete(user)}" id="loeschen" icon="ui-icon-comment" title="User löschen" />
+				</p:column>
+			</p:dataTable>
 		</h:form>
 		
 	</ui:define>

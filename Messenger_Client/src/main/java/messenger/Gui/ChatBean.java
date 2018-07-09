@@ -129,7 +129,7 @@ public class ChatBean implements Serializable{
 		DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 		Date date = new Date();
 		
-		messageList.add(userBean.getUsername() + " - " + dateFormat.format(date) + " - " + message);
+		//messageList.add(userBean.getUsername() + " - " + dateFormat.format(date) + " - " + message);
 		this.message = "";
 	}
 	

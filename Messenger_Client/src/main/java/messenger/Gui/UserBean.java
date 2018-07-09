@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.context.FacesContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -18,7 +19,7 @@ import messenger.ServiceAdapter.UserManagementAdapter;
 import org.springframework.context.annotation.ScopedProxyMode;
 
 @Component
-@Scope("session")
+@Scope(value="session", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class UserBean implements Serializable{
 
 	/**
@@ -34,7 +35,7 @@ public class UserBean implements Serializable{
     
     private List<User> userList;
     
-	private User user = new User();
+	private User user;
 
 	@PostConstruct
     public void init() {
@@ -42,8 +43,9 @@ public class UserBean implements Serializable{
     }
 
     
-    public String save(){
+    public String save(User user){
     	//user = userManagement.getUser(user);
+    	this.user = user;
     	return "success";
     }
     
@@ -55,7 +57,10 @@ public class UserBean implements Serializable{
     }
     
     public String logout(){
-    	user = null;
+    	FacesContext
+		.getCurrentInstance()
+		.getExternalContext()
+		.invalidateSession();
     	return "chooseUser?faces-redirect=true";
     }
 
